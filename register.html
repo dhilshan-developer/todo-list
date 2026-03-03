@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Register — Task Master</title>
+  <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+
+<div class="auth-page">
+
+  <!-- ══ LEFT PANEL ══════════════════════════════════════ -->
+  <div class="auth-left">
+    <div class="auth-brand">
+      <div class="auth-brand-icon">✅</div>
+      <div>
+        <div class="auth-brand-name">TASK MASTER</div>
+        <div class="auth-brand-sub">To-Do List App</div>
+      </div>
+    </div>
+
+    <div class="auth-hero">
+      <div class="auth-eyebrow">Join Task Master</div>
+      <h1 class="auth-title">
+        Stay<br/>
+        <em>Organised.</em><br/>
+        Stay Ahead.
+      </h1>
+      <p class="auth-desc">
+        Create your free account and start managing tasks smarter.
+        Sync across devices, collaborate with your team, and never
+        miss a deadline again. Built for professionals and students alike.
+      </p>
+      <div class="feat-pills">
+        <div class="feat-pill"><span>✓</span> Free to use</div>
+        <div class="feat-pill"><span>✓</span> Cloud backup</div>
+        <div class="feat-pill"><span>✓</span> All devices</div>
+        <div class="feat-pill"><span>✓</span> Secure &amp; private</div>
+      </div>
+    </div>
+
+    <div class="auth-meta">
+      <div class="auth-meta-info">
+       
+      </div>
+      <div class="pulse-badge">
+        <span class="pulse-dot"></span> 
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ RIGHT PANEL: REGISTER FORM ══════════════════════ -->
+  <div class="auth-right">
+    <div class="form-box">
+
+      <div class="form-head">
+        <div class="form-head-label">Get started free</div>
+        <h2 class="form-head-title">Create Account</h2>
+        <p class="form-head-sub">
+          Already have an account? <a href="login.html">Sign in →</a>
+        </p>
+      </div>
+
+      <div class="form-msg" id="msg"></div>
+
+      <!-- Name row -->
+      <div class="form-row">
+        <div class="fg">
+          <label for="firstName">First Name</label>
+          <div class="iw">
+            <input class="fi" id="firstName" type="text" placeholder="Gokul" autocomplete="given-name"/>
+            <span class="iw-icon">👤</span>
+          </div>
+        </div>
+        <div class="fg">
+          <label for="lastName">Last Name</label>
+          <div class="iw">
+            <input class="fi" id="lastName" type="text" placeholder="B" autocomplete="family-name"/>
+            <span class="iw-icon">👤</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Email -->
+      <div class="fg">
+        <label for="email">Email Address</label>
+        <div class="iw">
+          <input class="fi" id="email" type="email" placeholder="you@email.com" autocomplete="email"/>
+          <span class="iw-icon">✉</span>
+        </div>
+      </div>
+
+      <!-- Password -->
+      <div class="fg">
+        <label for="password">Password</label>
+        <div class="iw">
+          <input class="fi eye-pad" id="password" type="password"
+            placeholder="Min. 6 characters"
+            autocomplete="new-password"
+            oninput="checkStrength(this.value)"/>
+          <span class="iw-icon">🔒</span>
+          <button class="eye-btn" type="button" onclick="toggleEye('password',this)">👁</button>
+        </div>
+        <div class="str-wrap" id="strWrap">
+          <div class="str-bar"><div class="str-fill" id="strFill"></div></div>
+          <div class="str-label" id="strLabel"></div>
+        </div>
+      </div>
+
+      <!-- Confirm Password -->
+      <div class="fg">
+        <label for="confirmPw">Confirm Password</label>
+        <div class="iw">
+          <input class="fi eye-pad" id="confirmPw" type="password"
+            placeholder="Re-enter password" autocomplete="new-password"/>
+          <span class="iw-icon">🔒</span>
+          <button class="eye-btn" type="button" onclick="toggleEye('confirmPw',this)">👁</button>
+        </div>
+      </div>
+
+      <!-- Terms -->
+      <div class="terms-row">
+        <input type="checkbox" id="terms"/>
+        <label for="terms">
+          I agree to the <a href="#">Terms of Service</a> and
+          <a href="#">Privacy Policy</a>
+        </label>
+      </div>
+
+      <!-- Submit -->
+      <button class="btn-primary" id="registerBtn" onclick="handleRegister()">
+        <span class="btn-spinner"></span>
+        <span class="btn-text">Create Account →</span>
+      </button>
+
+      <div class="or-divider"><span>or</span></div>
+
+      <button class="btn-primary" id="googleRegBtn"
+        style="background:var(--surface);border:1px solid var(--border);color:var(--text);font-family:'Outfit',sans-serif;font-weight:500"
+        onclick="handleGoogle()">
+        <span class="btn-spinner"></span>
+        <span class="btn-text">🔵 Sign up with Google</span>
+      </button>
+
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+<script>
+  function checkStrength(pw) {
+    const wrap = document.getElementById('strWrap');
+    const fill = document.getElementById('strFill');
+    const lbl  = document.getElementById('strLabel');
+    if (!pw) { wrap.classList.remove('show'); return; }
+    wrap.classList.add('show');
+    let s = 0;
+    if (pw.length >= 6)  s++;
+    if (pw.length >= 10) s++;
+    if (/[A-Z]/.test(pw)) s++;
+    if (/[0-9]/.test(pw)) s++;
+    if (/[^A-Za-z0-9]/.test(pw)) s++;
+    const lvl = [
+      {w:'20%',c:'#ff5c72',t:'Very Weak'},
+      {w:'40%',c:'#ff8c42',t:'Weak'},
+      {w:'60%',c:'#f5c518',t:'Fair'},
+      {w:'80%',c:'#8fd14f',t:'Strong'},
+      {w:'100%',c:'#00e5a0',t:'Very Strong ✓'},
+    ][Math.min(s-1,4)] || {w:'20%',c:'#ff5c72',t:'Very Weak'};
+    fill.style.width = lvl.w; fill.style.background = lvl.c;
+    lbl.textContent = lvl.t; lbl.style.color = lvl.c;
+  }
+  function toggleEye(id, btn) {
+    const f = document.getElementById(id);
+    f.type = f.type === 'password' ? 'text' : 'password';
+    btn.textContent = f.type === 'password' ? '👁' : '🙈';
+  }
+</script>
+<script type="module" src="js/register.js"></script>
+</body>
+</html>

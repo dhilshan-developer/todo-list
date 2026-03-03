@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Task Master — Dashboard</title>
+  <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+
+<div class="app-page">
+
+  <!-- ══ HEADER ════════════════════════════════════════════ -->
+  <header class="app-header">
+    <div class="app-brand">
+      <div class="app-brand-icon">✅</div>
+      <div class="app-brand-name">TASK MASTER</div>
+    </div>
+    <div class="app-header-right">
+      <div class="db-badge">
+        <span class="db-dot" id="dbDot"></span>
+        <span id="dbStatus">Connecting...</span>
+      </div>
+      <div class="user-chip">
+        👋 <span id="userName">User</span>
+      </div>
+      <button class="logout-btn" onclick="handleLogout()">Sign Out</button>
+    </div>
+  </header>
+
+  <!-- ══ MAIN ══════════════════════════════════════════════ -->
+  <div class="app-main">
+
+    <!-- ── SIDEBAR ── -->
+    <aside class="sidebar">
+
+      <!-- Progress -->
+      <div class="panel">
+        <div class="panel-label">Today's Progress</div>
+        <div class="ring-wrap">
+          <svg class="ring-svg" width="70" height="70" viewBox="0 0 70 70">
+            <circle class="ring-bg" cx="35" cy="35" r="30"/>
+            <circle class="ring-fill" id="ringFill" cx="35" cy="35" r="30"/>
+          </svg>
+          <div>
+            <div class="ring-pct" id="ringPct">0%</div>
+            <div class="ring-sub" id="ringSub">0 of 0 complete</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Categories -->
+      <div class="panel">
+        <div class="panel-label">Categories</div>
+        <button class="cat-btn active" data-cat="All"      onclick="filterCat(this)">
+          <span class="cat-dot" style="background:linear-gradient(135deg,#00e5a0,#4f8ef7)"></span>
+          All Tasks <span class="cat-count" id="c-All">0</span>
+        </button>
+        <button class="cat-btn" data-cat="Work"     onclick="filterCat(this)">
+          <span class="cat-dot" style="background:#4f8ef7"></span>
+          Work <span class="cat-count" id="c-Work">0</span>
+        </button>
+        <button class="cat-btn" data-cat="Personal" onclick="filterCat(this)">
+          <span class="cat-dot" style="background:#b478f5"></span>
+          Personal <span class="cat-count" id="c-Personal">0</span>
+        </button>
+        <button class="cat-btn" data-cat="Shopping" onclick="filterCat(this)">
+          <span class="cat-dot" style="background:#00e5a0"></span>
+          Shopping <span class="cat-count" id="c-Shopping">0</span>
+        </button>
+        <button class="cat-btn" data-cat="Health"   onclick="filterCat(this)">
+          <span class="cat-dot" style="background:#ffb347"></span>
+          Health <span class="cat-count" id="c-Health">0</span>
+        </button>
+        <button class="cat-btn" data-cat="Other"    onclick="filterCat(this)">
+          <span class="cat-dot" style="background:#8494a8"></span>
+          Other <span class="cat-count" id="c-Other">0</span>
+        </button>
+      </div>
+
+      <!-- Quick Stats -->
+      <div class="panel">
+        <div class="panel-label">Quick Stats</div>
+        <div class="qs-row"><span>High Priority</span><span class="qs-val r" id="qHigh">0</span></div>
+        <div class="qs-row"><span>Medium Priority</span><span class="qs-val y" id="qMed">0</span></div>
+        <div class="qs-row"><span>Low Priority</span><span class="qs-val g" id="qLow">0</span></div>
+        <div class="qs-div"></div>
+        <div class="qs-row"><span>Pending</span><span class="qs-val" id="qPend">0</span></div>
+        <div class="qs-row"><span>Completed</span><span class="qs-val g" id="qDone">0</span></div>
+        <div class="qs-row"><span>Overdue</span><span class="qs-val r" id="qOver">0</span></div>
+      </div>
+
+    </aside>
+
+    <!-- ── MAIN CONTENT ── -->
+    <div class="main-col">
+
+      <!-- Add Task -->
+      <div class="panel" style="animation-delay:.05s">
+        <div class="panel-label">Add New Task</div>
+        <div class="add-row">
+          <input class="ifield" id="taskInput" type="text" placeholder="What needs to be done?"/>
+          <button class="add-btn" onclick="addTask()">＋ Add</button>
+        </div>
+        <div class="add-row-2">
+          <select class="ifield" id="catSel" style="flex:0 0 auto">
+            <option>Work</option>
+            <option>Personal</option>
+            <option>Shopping</option>
+            <option>Health</option>
+            <option>Other</option>
+          </select>
+          <input class="ifield" id="dateInput" type="date" style="flex:0 0 auto"/>
+          <div class="pri-group">
+            <button class="pri-chip low sel" data-p="Low"    onclick="setPri(this)">Low</button>
+            <button class="pri-chip medium"  data-p="Medium" onclick="setPri(this)">Medium</button>
+            <button class="pri-chip high"    data-p="High"   onclick="setPri(this)">High</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Controls -->
+      <div class="ctrl-row">
+        <div class="search-wrap">
+          <span class="search-icon">🔍</span>
+          <input class="ifield" id="searchInput" type="text" placeholder="Search tasks..." oninput="renderTasks()"/>
+        </div>
+        <button class="sort-btn active" data-s="date"  onclick="setSort(this)">Date</button>
+        <button class="sort-btn"        data-s="pri"   onclick="setSort(this)">Priority</button>
+        <button class="sort-btn"        data-s="alpha" onclick="setSort(this)">A–Z</button>
+        <span class="count-lbl" id="countLbl"></span>
+      </div>
+
+      <!-- Task list -->
+      <div id="taskList"></div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ══ EDIT MODAL ════════════════════════════════════════ -->
+<div class="modal-ov" id="editModal">
+  <div class="modal">
+    <h2>Edit Task</h2>
+    <div class="fg">
+      <label>Title</label>
+      <input class="ifield" id="eTitle" type="text" style="width:100%"/>
+    </div>
+    <div class="fg">
+      <label>Category</label>
+      <select class="ifield" id="eCat" style="width:100%">
+        <option>Work</option><option>Personal</option>
+        <option>Shopping</option><option>Health</option><option>Other</option>
+      </select>
+    </div>
+    <div class="fg">
+      <label>Due Date</label>
+      <input class="ifield" id="eDate" type="date" style="width:100%"/>
+    </div>
+    <div class="fg">
+      <label>Priority</label>
+      <select class="ifield" id="ePri" style="width:100%">
+        <option>Low</option><option>Medium</option><option>High</option>
+      </select>
+    </div>
+    <div class="m-actions">
+      <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+      <button class="btn-save"   onclick="saveEdit()">Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+<script type="module" src="js/app.js"></script>
+</body>
+</html>

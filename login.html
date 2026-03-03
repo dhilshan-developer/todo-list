@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login — Task Master</title>
+  <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+
+<div class="auth-page">
+
+  <!-- ══ LEFT PANEL ══════════════════════════════════════ -->
+  <div class="auth-left">
+    <div class="auth-brand">
+      <div class="auth-brand-icon">✅</div>
+      <div>
+        <div class="auth-brand-name">TASK MASTER</div>
+        <div class="auth-brand-sub">To-Do List App</div>
+      </div>
+    </div>
+
+    <div class="auth-hero">
+      <div class="auth-eyebrow">Project Abstract</div>
+      <h1 class="auth-title">
+        Manage Tasks.<br/>
+        <em>Master</em> Time.
+      </h1>
+      <p class="auth-desc">
+        Task Master is a productivity application designed to help you
+        efficiently manage tasks, deadlines, and daily activities —
+        with a user-friendly interface that enhances productivity,
+        time management, and organisation.
+      </p>
+      <div class="feat-pills">
+        <div class="feat-pill"><span>✓</span> Task Creation</div>
+        <div class="feat-pill"><span>✓</span> Reminders</div>
+        <div class="feat-pill"><span>✓</span> Categorisation</div>
+        <div class="feat-pill"><span>✓</span> Progress Tracking</div>
+        <div class="feat-pill"><span>✓</span> Cloud Sync</div>
+        <div class="feat-pill"><span>✓</span> Collaboration</div>
+      </div>
+    </div>
+
+    <div class="auth-meta">
+      <div class="auth-meta-info">
+       
+      </div>
+      <div class="pulse-badge">
+        <span class="pulse-dot"></span> Firebase
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ RIGHT PANEL: LOGIN FORM ═════════════════════════ -->
+  <div class="auth-right">
+    <div class="form-box">
+
+      <div class="form-head">
+        <div class="form-head-label">Welcome back</div>
+        <h2 class="form-head-title">Sign In</h2>
+        <p class="form-head-sub">
+          No account? <a href="register.html">Create one →</a>
+        </p>
+      </div>
+
+      <div class="form-msg" id="msg"></div>
+
+      <!-- Email -->
+      <div class="fg">
+        <label for="email">Email Address</label>
+        <div class="iw">
+          <input class="fi" id="email" type="email" placeholder="you@email.com" autocomplete="email"/>
+          <span class="iw-icon">✉</span>
+        </div>
+      </div>
+
+      <!-- Password -->
+      <div class="fg">
+        <label for="password">Password</label>
+        <div class="iw">
+          <input class="fi eye-pad" id="password" type="password" placeholder="Your password" autocomplete="current-password"/>
+          <span class="iw-icon">🔒</span>
+          <button class="eye-btn" type="button" onclick="toggleEye('password',this)">👁</button>
+        </div>
+      </div>
+
+      <!-- Remember / Forgot -->
+      <div class="cbox-row">
+        <label class="cbox-label">
+          <input type="checkbox" id="remember"/> Remember me
+        </label>
+        <a href="#" onclick="forgotPassword()">Forgot password?</a>
+      </div>
+
+      <!-- Submit -->
+      <button class="btn-primary" id="loginBtn" onclick="handleLogin()">
+        <span class="btn-spinner"></span>
+        <span class="btn-text">Sign In →</span>
+      </button>
+
+      <div class="or-divider"><span>or</span></div>
+
+      <!-- Google Sign In -->
+      <button class="btn-primary" id="googleBtn"
+        style="background:var(--surface);border:1px solid var(--border);color:var(--text);font-family:'Outfit',sans-serif;font-weight:500"
+        onclick="handleGoogle()">
+        <span class="btn-spinner"></span>
+        <span class="btn-text">🔵 Continue with Google</span>
+      </button>
+
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+<script type="module" src="js/login.js"></script>
+</body>
+</html>
