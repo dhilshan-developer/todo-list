@@ -13,7 +13,7 @@ import { getFirestore, doc, setDoc, serverTimestamp }
 
 // ── PASTE YOUR FIREBASE CONFIG HERE ─────────────────────
 const firebaseConfig = {
-  apiKey: "AIzaSyCAe0JzjctZLGdH8WPt8WyvBAnvypgAowg",
+  apiKey: "",
   authDomain: "taskmaster-229b7.firebaseapp.com",
   projectId: "taskmaster-229b7",
   storageBucket: "taskmaster-229b7.firebasestorage.app",
